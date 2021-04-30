@@ -15,7 +15,10 @@ namespace SchoolLibrary
 		}
 		public override string SendMessage(string message)
 		{
-			return base.SendMessage(message);
+			var original =  base.SendMessage(message);
+			var sb = new StringBuilder(original);
+			sb.AppendLine("This message is private and confidential. ");
+			return sb.ToString();
 		}
 	}
 }
