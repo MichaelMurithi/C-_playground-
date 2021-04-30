@@ -43,6 +43,8 @@
 			this.txtPhone = new System.Windows.Forms.TextBox();
 			this.txtTwitter = new System.Windows.Forms.TextBox();
 			this.pushToText = new System.Windows.Forms.Button();
+			this.testTeacher = new System.Windows.Forms.Button();
+			this.btnTestStudent = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// schoolName
@@ -167,11 +169,33 @@
 			this.pushToText.UseVisualStyleBackColor = true;
 			this.pushToText.Click += new System.EventHandler(this.button1_Click);
 			// 
+			// testTeacher
+			// 
+			this.testTeacher.Location = new System.Drawing.Point(121, 365);
+			this.testTeacher.Name = "testTeacher";
+			this.testTeacher.Size = new System.Drawing.Size(273, 23);
+			this.testTeacher.TabIndex = 15;
+			this.testTeacher.Text = "Test Teacher";
+			this.testTeacher.UseVisualStyleBackColor = true;
+			this.testTeacher.Click += new System.EventHandler(this.testTeacher_Click);
+			// 
+			// btnTestStudent
+			// 
+			this.btnTestStudent.Location = new System.Drawing.Point(121, 395);
+			this.btnTestStudent.Name = "btnTestStudent";
+			this.btnTestStudent.Size = new System.Drawing.Size(273, 23);
+			this.btnTestStudent.TabIndex = 16;
+			this.btnTestStudent.Text = "Test Student";
+			this.btnTestStudent.UseVisualStyleBackColor = true;
+			this.btnTestStudent.Click += new System.EventHandler(this.btnTestStudent_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(488, 383);
+			this.ClientSize = new System.Drawing.Size(522, 472);
+			this.Controls.Add(this.btnTestStudent);
+			this.Controls.Add(this.testTeacher);
 			this.Controls.Add(this.pushToText);
 			this.Controls.Add(this.txtTwitter);
 			this.Controls.Add(this.txtPhone);
@@ -211,6 +235,8 @@
 		private System.Windows.Forms.TextBox txtPhone;
 		private System.Windows.Forms.TextBox txtTwitter;
 		private System.Windows.Forms.Button pushToText;
+		private System.Windows.Forms.Button testTeacher;
+		private System.Windows.Forms.Button btnTestStudent;
 	}
 }
 
