@@ -13,5 +13,9 @@ namespace SchoolLibrary
 		{
 			return 4.0f;
 		}
+		public override string SendMessage(string message)
+		{
+			return base.SendMessage(message);
+		}
 	}
 }
