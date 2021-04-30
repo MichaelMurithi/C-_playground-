@@ -7,14 +7,20 @@ namespace SchoolApp
 {
 	class School
 	{
-		public string name { get; set; }
-		public string staffMembers { get; set; }
-		public string address { get; set; }
-		public string location { get; set; }
+		public string Name { get; set; }
+		public string Address { get; set; }
+		public string City { get; set; }
+
+		public string Zip { get; set; }
+
+		public string State { get; set; }
+
+		public string PhoneNumber { get; set; }
+
 
 		private string _twitterAddress;
 
-		string TwitterAddress
+		public string TwitterAddress
 		{
 			get { return _twitterAddress; } //On get, the twitter address is automatically returned
 			set
@@ -42,9 +48,9 @@ namespace SchoolApp
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
-			sb.AppendLine(name);
-			sb.AppendLine(address);
-			sb.AppendLine(location);
+			sb.AppendLine(Name);
+			sb.AppendLine(Address);
+			sb.AppendLine(City);
 			sb.Append(", ");
 			sb.Append("  ");
 

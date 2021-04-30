@@ -171,7 +171,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(829, 495);
+			this.ClientSize = new System.Drawing.Size(488, 383);
 			this.Controls.Add(this.pushToText);
 			this.Controls.Add(this.txtTwitter);
 			this.Controls.Add(this.txtPhone);
