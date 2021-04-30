@@ -6,6 +6,6 @@ namespace SchoolApp.Elementary
 {
 	class Volume
 	{
-		
+
 	}
 }

@@ -22,7 +22,8 @@ namespace SchoolApp
 				if (value.StartsWith("@")) //A valid address should start with @
 				{
 					_twitterAddress = value;
-				} else
+				}
+				else
 				{
 					throw new Exception("The twitter address must begin with @");
 				}
@@ -31,7 +32,8 @@ namespace SchoolApp
 
 		// Function bodied expressions
 		public static float AverageThreeScores(float a, float b, float c) => (a + b + c) / 3;
-		public static int AverageThreeScores(int a, int b, int c){
+		public static int AverageThreeScores(int a, int b, int c)
+		{
 			var result = (a + b + c) / 3;
 			return result;
 		}
