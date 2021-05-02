@@ -6,6 +6,18 @@ namespace SchoolApp
 {
 	public class FlowControl
 	{
+		// Compound logic with logical OR
+		public string PrimaryOrSecondaryCompound(string color)
+		{
+			if(color.ToLower() == "red" || color.ToLower() == "blue" || color.ToLower() == "yellow")
+			{
+				return "primary";
+			}
+			else
+			{
+				return "Secondary";
+			}
+		}
 		//Switch statements
 		public string SecondaryOrPrimary(string color)
 		{
