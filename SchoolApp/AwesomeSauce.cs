@@ -6,7 +6,7 @@ namespace SchoolApp
 {
 	public class AwesomeSauce
 	{
-		public List<string> Sauces { get; set}; 
+		public List<string> Sauces { get; set; }
 
 		public AwesomeSauce()
 		{
