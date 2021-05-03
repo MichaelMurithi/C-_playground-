@@ -6,6 +6,37 @@ namespace SchoolApp
 {
 	public class FlowControl
 	{
+
+		public string IsYourNameNotBruce(string yourName)
+		{
+			if(yourName.ToLower() != "bruce")
+			{
+				return "Can we call you Bruce for the sake of simplicity?";
+			} else
+			{
+				return "Oooh! Great to have you around Bruce!";
+			}
+		}
+		//If..else operator
+		public string GradeLetter(int score)
+		{
+			if(score > 90)
+			{
+				return "A";
+			}
+			else if (score > 79 && score <90)
+			{
+				return "B";
+			}
+			else if (score >=70 && score <= 80)
+			{
+				return "C";
+			} else
+			{
+				return "F";
+			}
+		}
+
 		// Compound logic with logical OR
 		public string PrimaryOrSecondaryCompound(string color)
 		{
@@ -18,6 +49,7 @@ namespace SchoolApp
 				return "Secondary";
 			}
 		}
+
 		//Switch statements
 		public string SecondaryOrPrimary(string color)
 		{
