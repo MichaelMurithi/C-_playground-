@@ -11,9 +11,9 @@ namespace SchoolLibrary
 		public string PaperText { get; set; }
 		public int WordCount
 		{
-			get { return PaperText.WordCount()
+			get {
+				return PaperText.WordCount();
 					}
 		}
 	}
 }
-\
