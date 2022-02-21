@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Text;
 
 namespace BethanysPieShopHRM
@@ -9,38 +8,42 @@ namespace BethanysPieShopHRM
         static void Main(string[] args)
         {
             ////Demo 1
-            //string firstName = "Bethany";
-            //string lastName = "Smith";
-            //System.String fullName = "Bethany Smith";
-            //string noValueString = null;
-            //string s;
-            //s = firstName;
-            //var userName = "BethanyS";
+            //string myPhrase = "Today I decided to learn the Csharp type system";
+            //string emphasize = myPhrase.ToUpper();
+            //string lower = myPhrase.ToLower();
+
+            //bool iSeeSharp = myPhrase.Contains("Csharp");
+            //string newPhrase = myPhrase.Replace("Csharp", "Python");
+            //string timeOfLearning = newPhrase.Substring(0, 5);
+
+            //Console.WriteLine($"{myPhrase}\njust to emphasize; {emphasize} and \nin case you did not get it; {lower}" +
+            //    $"\nAsking if I learn Csharp? the answer is {iSeeSharp}.\nWant to know when I'm learning? {timeOfLearning}");
 
             ////Demo 2
-            //string fullName = firstName + " " + lastName;
-            //string employeeIdentification = String.Concat(firstName, lastName);
-            ////string empId = firstName.ToLower() + "-" + firstName.ToLower();
-            //string empId = firstName.ToLower() + "-" + firstName.Trim().ToLower();
-            //int length = empId.Length;
-            //if (fullName.Contains("beth") || fullName.Contains("Beth"))
-            //{
-            //    Console.WriteLine("It's Bethany!");
-            //}
-            //string subString = fullName.Substring(1, 3);
-            //Console.WriteLine("Chararters 2 to 4 of fullName are " + subString);
+            //string firstName = "Michael";
+            //string lastName = "Murithi";
 
-            ////string interpolation
-            //string nameUsingInterpolation = $"{firstName}-{lastName}";
-            //string v = $"Hello, {firstName}!";
+            //string fullName = string.Concat(firstName, " ", lastName);
+
+            //string employeeId = firstName.ToLower() + "-" + lastName.ToLower();
+
+            //int length = employeeId.Length;
+
+            //if (fullName.ToLower().Contains("mich"))
+            //{
+            //    Console.WriteLine("\nHey! We finally found Michael!\n");
+            //}
+
+            //string substring = fullName.Substring(0, 4);
+            //Console.WriteLine($"His fullname has {length} characters. The first 4 characters are {substring}");
 
             ////Demo 3
-            //string displayName = $"Welcome!\n{firstName}\t{lastName};
+            //string displayName = $"Welcome!\n{firstName}\t{lastName}";
             //string invalidFilePath = "C:\data\employeelist.xlsx";
             //string filePath = "C:\\data\\employeelist.xlsx";
             //string marketingTagLine = "Baking the \"best pies\" ever";
 
-            //string verbatimFilePath = @"C:\data\employeelist.xlsx";
+            //string verbatimFilePath = @"C:\data\employeelist.xlsx"; // => disables escape sequences.
 
             //Demo 4
             //string name1 = "Bethany";
@@ -57,66 +60,46 @@ namespace BethanysPieShopHRM
             //Console.Write("Name3: " + name3);
 
             //Demo 5
-            string name = "Bethany";
-            string anotherName = name;
-            name += " Smith";
+            //string name = "Bethany";
+            //string anotherName = name;
+            //name += " Smith";
 
-            Console.Write("Name: " + name);
-            Console.WriteLine("Another name: " + anotherName);
+            //Console.Write("Name: " + name);
+            //Console.WriteLine("Another name: " + anotherName);
 
-            string lowerCaseName = name.ToLower();
+            //string lowerCaseName = name.ToLower();
 
-            string indexes = string.Empty;
+            //string indexes = string.Empty;
 
-            for (int i = 0; i < 2500; i++)
-            {
-                indexes += i.ToString();
-            }
+            //for (int i = 0; i < 2500; i++)
+            //{
+            //    indexes += i.ToString();
+            //}
 
 
-            string firstName = "Bethany";
-            string lastName = "Smith";
+            //string firstName = "Bethany";
+            //string lastName = "Smith";
 
-            StringBuilder builder = new StringBuilder();
-            builder.Append("Last name: ");
-            builder.Append(lastName);
-            builder.Append("First name: ");
-            builder.Append(firstName);
-            string result = builder.ToString();
+            //StringBuilder plans = new StringBuilder();
+            //plans.AppendLine("..................................................................");
+            //plans.AppendLine("\nMy Plans for 2022\n");
+            //plans.AppendLine("Get Microsoft Azure Fundamentals certification");
+            //plans.AppendLine("Learn C Programming language");
+            //plans.AppendLine("Master C# .net");
+            //plans.AppendLine("Get comfortable with Devops concepts (Kubernetes, Docker, deployment)");
+            //plans.AppendLine("Complete my first year of university successfully");
+            //string results = plans.ToString();
+            //Console.WriteLine(results);
 
-            StringBuilder builder2 = new StringBuilder();
+            ////Demo 6
+            Console.WriteLine("Enter the wage:");
+            string wage = Console.ReadLine();
 
-            for (int i = 0; i < 2500; i++)
-            {
-                builder2.Append(i);
-                builder2.Append(" ");
-            }
-            string list = builder2.ToString();
-
-            //Demo 6
-            string wage = "1,234.15";
-            //double wageValue = double.Parse(wage);
-            
-            //might actually fail because of cultural settings
-            CultureInfo culture = null;
-            culture = CultureInfo.CreateSpecificCulture("en-US");
-            double wageValueWithCulture = double.Parse(wage, culture);
-
-            double wageValue;
-            if (double.TryParse(wage, out wageValue))
-                Console.WriteLine("Parsing success: " + wageValue);
+            int wageValue;
+            if (int.TryParse(wage, out wageValue))
+                Console.WriteLine($"Passing a wage of {wageValue} successfull");
             else
-                Console.WriteLine("Parsing failed");
-
-            string hireDateString = "12/12/2020";
-            DateTime hireDate = DateTime.Parse(hireDateString);
-            Console.WriteLine("Parsed date: " + hireDate);
-            //TryParse also exists for dates
-
-            var cultureInfo = new CultureInfo("nl-BE");
-            string birthDateString = "28 Maart 1984";//Dutch, spoken in Belgium
-            var birthDate = DateTime.Parse(birthDateString, cultureInfo);
-            Console.WriteLine("Birth date: " + birthDate);
+                Console.WriteLine("Please provide a valid wage!");
         }
     }
 }
