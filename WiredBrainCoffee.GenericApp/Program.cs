@@ -12,7 +12,7 @@
 
         private static void StackStrings()
         {
-            var stringStack = new SimpleStackString();
+            var stringStack = new SimpleStack<string>();
             
             stringStack.Push("Learning C# is really amaxzing");
             stringStack.Push("Yes, at some point it is really boring");
@@ -27,7 +27,7 @@
 
         private static void StackDoubles()
         {
-            var stack = new SimpleStackDouble();
+            var stack = new SimpleStack<double>();
             double sum = 0.0;
 
             stack.Push(1.2);
