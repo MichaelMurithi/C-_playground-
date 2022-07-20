@@ -38,6 +38,11 @@ namespace WiredBrainCoffee.StackApp
 
             while (stack.Count > 0)
             {
+                /*
+                 * Type casting requires boxing and unboxing, which means double values copied to another place
+                 * Type casting therefore leads to perfomance costs
+                 */
+
                 double item = (double)stack.Pop();
                 Console.WriteLine($"Item: {item}");
                 sum += item;
