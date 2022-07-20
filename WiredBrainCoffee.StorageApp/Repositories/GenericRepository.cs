@@ -2,7 +2,7 @@
 {
     public class GenericRepository<T>
     {
-        private readonly List<T> _entities = new();
+        protected readonly List<T> _entities = new();
         public void Add(T entity)
         {
             _entities.Add(entity);
@@ -15,5 +15,10 @@
                 Console.WriteLine(entity?.ToString());
             }
         }
+    }
+
+    public class GenericRepositoryWithRemove<T> : GenericRepository<T>
+    {
+        public void Remove(T entity) => _entities.Remove(entity);
     }
 }

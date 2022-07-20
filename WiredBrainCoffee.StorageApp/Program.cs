@@ -15,7 +15,7 @@ namespace WiredBrainCoffee.StorageApp
         {
             Console.WriteLine("\nEmployees:\n");
 
-            var employeeRepository = new GenericRepository<Employee>();
+            var employeeRepository = new GenericRepositoryWithRemove<Employee>();
 
             employeeRepository.Add(new Employee { FirstName = "Polycarp", Id = 1 });
             employeeRepository.Add(new Employee { FirstName = "Peterson", Id = 2 });
