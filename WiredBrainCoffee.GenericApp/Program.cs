@@ -1,5 +1,11 @@
 ﻿namespace WiredBrainCoffee.StackApp
 {
+    /*
+     * Advantages of generics:
+     - Code-reuse
+     - Type-safety
+     - Perfomance
+     */
     class Program
     {
         static void Main(string[] args)
@@ -12,7 +18,7 @@
 
         private static void StackStrings()
         {
-            var stringStack = new SimpleStack<string>();
+            var stringStack = new Stack<string>();
             
             stringStack.Push("Learning C# is really amaxzing");
             stringStack.Push("Yes, at some point it is really boring");
@@ -27,7 +33,7 @@
 
         private static void StackDoubles()
         {
-            var stack = new SimpleStack<double>();
+            var stack = new Stack<double>();
             double sum = 0.0;
 
             stack.Push(1.2);
