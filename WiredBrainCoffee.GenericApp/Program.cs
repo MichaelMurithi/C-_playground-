@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WiredBrainCoffee.StackApp
+﻿namespace WiredBrainCoffee.StackApp
 {
     class Program
     {
@@ -14,7 +12,7 @@ namespace WiredBrainCoffee.StackApp
 
         private static void StackStrings()
         {
-            var stringStack = new SimpleStack();
+            var stringStack = new SimpleStackString();
             
             stringStack.Push("Learning C# is really amaxzing");
             stringStack.Push("Yes, at some point it is really boring");
@@ -29,7 +27,7 @@ namespace WiredBrainCoffee.StackApp
 
         private static void StackDoubles()
         {
-            var stack = new SimpleStack();
+            var stack = new SimpleStackDouble();
             double sum = 0.0;
 
             stack.Push(1.2);
@@ -38,12 +36,8 @@ namespace WiredBrainCoffee.StackApp
 
             while (stack.Count > 0)
             {
-                /*
-                 * Type casting requires boxing and unboxing, which means double values copied to another place
-                 * Type casting therefore leads to perfomance costs
-                 */
 
-                double item = (double)stack.Pop();
+                double item = stack.Pop();
                 Console.WriteLine($"Item: {item}");
                 sum += item;
             }
