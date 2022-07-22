@@ -2,7 +2,7 @@
 
 namespace WiredBrainCoffee.StorageApp.Repositories
 {
-    public class GenericRepository<T> where T : EntityBase
+    public class ListRepository<T> where T : EntityBase
     {
         private readonly List<T> _entities = new();
 
