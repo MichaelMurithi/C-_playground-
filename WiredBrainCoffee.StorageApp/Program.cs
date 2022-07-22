@@ -2,6 +2,7 @@
 using WiredBrainCoffee.StorageApp.Entities;
 using WiredBrainCoffee.StorageApp.Repositories;
 
+
 namespace WiredBrainCoffee.StorageApp
 {
     class Program
@@ -49,7 +50,7 @@ namespace WiredBrainCoffee.StorageApp
                 new Employee { FirstName = "Shirly" }
             };
 
-            AddBatch(employeeRepository, employees);
+            employeeRepository.AddBatch(employees);
         }
 
         private static void AddOrganizations(IRepository<Organization> organizationRepository)
@@ -65,17 +66,7 @@ namespace WiredBrainCoffee.StorageApp
                 new Organization { Name = "Financier" }
             };
 
-            AddBatch(organizationRepository, organizations);
-        }
-
-        private static void AddBatch<T>(IRepository<T> repository, T[] entities) where T: IEntity
-        {
-            foreach(var entity in entities)
-            {
-                repository.Add(entity);
-            }
-
-            repository.Save();
+            organizationRepository.AddBatch(organizations);
         }
 
         private static void WriteAllToConsole(IReadRepository<IEntity> repository)
