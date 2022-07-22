@@ -40,26 +40,42 @@ namespace WiredBrainCoffee.StorageApp
         {
             Console.WriteLine("\nEmployees:\n");
 
-            employeeRepository.Add(new Employee { FirstName = "Polycarp" });
-            employeeRepository.Add(new Employee { FirstName = "Peterson" });
-            employeeRepository.Add(new Employee { FirstName = "Rodgers" });
-            employeeRepository.Add(new Employee { FirstName = "Duncan" });
-            employeeRepository.Add(new Employee { FirstName = "Shirly" });
+            var employees = new[]
+            {
+                new Employee { FirstName = "Polycarp" },
+                new Employee { FirstName = "Peterson" },
+                new Employee { FirstName = "Rodgers" },
+                new Employee { FirstName = "Duncan" },
+                new Employee { FirstName = "Shirly" }
+            };
 
-            employeeRepository.Save();
+            AddBatch(employeeRepository, employees);
         }
 
         private static void AddOrganizations(IRepository<Organization> organizationRepository)
         {
             Console.WriteLine("\nOrganizations:\n");
 
-            organizationRepository.Add(new Organization { Name = "Telemetrics" });
-            organizationRepository.Add(new Organization { Name = "Amazon" });
-            organizationRepository.Add(new Organization { Name = "Commenius" });
-            organizationRepository.Add(new Organization { Name = "Ruzinovska" });
-            organizationRepository.Add(new Organization { Name = "Financier" });
+            var organizations = new[]
+            {
+                new Organization { Name = "Telemetrics" },
+                new Organization { Name = "Amazon" },
+                new Organization { Name = "Commenius" },
+                new Organization { Name = "Ruzinovska" },
+                new Organization { Name = "Financier" }
+            };
 
-            organizationRepository.Save();
+            AddBatch(organizationRepository, organizations);
+        }
+
+        private static void AddBatch<T>(IRepository<T> repository, T[] entities) where T: IEntity
+        {
+            foreach(var entity in entities)
+            {
+                repository.Add(entity);
+            }
+
+            repository.Save();
         }
 
         private static void WriteAllToConsole(IReadRepository<IEntity> repository)
