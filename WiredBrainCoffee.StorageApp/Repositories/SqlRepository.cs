@@ -3,7 +3,7 @@ using WiredBrainCoffee.StorageApp.Entities;
 
 namespace WiredBrainCoffee.StorageApp.Repositories
 {
-    public class SqlRepository<T> where T : EntityBase
+    public class SqlRepository<T> : IRepository<T> where T : class, IEntity
     {
         private readonly DbContext _dbContext;
         private readonly DbSet<T> _dbSet;
@@ -14,6 +14,11 @@ namespace WiredBrainCoffee.StorageApp.Repositories
             _dbSet = dbContext.Set<T>();
         }
 
+        public IEnumerable<T> GetAll()
+        {
+            return _dbSet.ToList();
+        }
+
         public T GetById(int Id)
         {
             return _dbSet.Find(Id);
@@ -21,7 +26,7 @@ namespace WiredBrainCoffee.StorageApp.Repositories
 
         public void Add(T entity)
         {
-           _dbSet.Add(entity);
+            _dbSet.Add(entity);
         }
 
         public void Remove(T entity)

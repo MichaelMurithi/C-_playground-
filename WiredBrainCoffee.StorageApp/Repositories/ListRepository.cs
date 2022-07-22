@@ -2,9 +2,14 @@
 
 namespace WiredBrainCoffee.StorageApp.Repositories
 {
-    public class ListRepository<T> where T : EntityBase
+    public class ListRepository<T> : IRepository<T> where T : IEntity
     {
         private readonly List<T> _entities = new();
+
+        public IEnumerable<T> GetAll()
+        {
+           return _entities.ToList();
+        }
 
         public T GetById(int Id)
         {
@@ -19,13 +24,9 @@ namespace WiredBrainCoffee.StorageApp.Repositories
 
         public void Save()
         {
-            foreach (T entity in _entities)
-            {
-                Console.WriteLine(entity?.ToString());
-            }
+            //Everything is already saved in the List<T>
         }
 
         public void Remove(T entity) => _entities.Remove(entity);
-
     }
 }

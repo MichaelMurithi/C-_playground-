@@ -11,18 +11,20 @@ namespace WiredBrainCoffee.StorageApp
             var employeeRepository = new SqlRepository<Employee>(new StorageAppDbContext());
             AddEmployees(employeeRepository);
             GetEmployeeById(employeeRepository);
+            WriteAllToConsole(employeeRepository);
 
             var organizationRepository = new ListRepository<Organization>();
             AddOrganizations(organizationRepository);
+            WriteAllToConsole(employeeRepository);
         }
 
-        private static void GetEmployeeById(SqlRepository<Employee> employeeRepository)
+        private static void GetEmployeeById(IRepository<Employee> employeeRepository)
         {
             var employee = employeeRepository.GetById(1);
             Console.WriteLine(employee.ToString());
         }
 
-        private static void AddEmployees(SqlRepository<Employee> employeeRepository)
+        private static void AddEmployees(IRepository<Employee> employeeRepository)
         {
             Console.WriteLine("\nEmployees:\n");
 
@@ -35,7 +37,7 @@ namespace WiredBrainCoffee.StorageApp
             employeeRepository.Save();
         }
 
-        private static void AddOrganizations(ListRepository<Organization> organizationRepository)
+        private static void AddOrganizations(IRepository<Organization> organizationRepository)
         {
             Console.WriteLine("\nOrganizations:\n");
 
@@ -46,6 +48,16 @@ namespace WiredBrainCoffee.StorageApp
             organizationRepository.Add(new Organization { Name = "Financier", Id = 5 });
 
             organizationRepository.Save();
+        }
+
+        private static void WriteAllToConsole(IReadRepository<IEntity> repository)
+        {
+            var items = repository.GetAll();
+
+            foreach (var item in items)
+            {
+                Console.WriteLine(item.ToString());
+            }
         }
     }
 }
