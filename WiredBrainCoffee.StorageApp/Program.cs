@@ -10,16 +10,28 @@ namespace WiredBrainCoffee.StorageApp
         {
             var employeeRepository = new SqlRepository<Employee>(new StorageAppDbContext());
             AddEmployees(employeeRepository);
-            GetEmployeeById(employeeRepository);
+            AddManagers(employeeRepository);
             WriteAllToConsole(employeeRepository);
+            GetEmployeeById(employeeRepository);
+
 
             var organizationRepository = new ListRepository<Organization>();
             AddOrganizations(organizationRepository);
-            WriteAllToConsole(employeeRepository);
+            WriteAllToConsole(organizationRepository);
+        }
+
+        private static void AddManagers(IWriteRepository<Manager> managerRepository)
+        {
+            managerRepository.Add(new Manager { FirstName = "Matej" });
+            managerRepository.Add(new Manager { FirstName = "Marek" });
+
+            managerRepository.Save();
         }
 
         private static void GetEmployeeById(IRepository<Employee> employeeRepository)
         {
+            Console.WriteLine("\nEmployee by Id 1:\n");
+
             var employee = employeeRepository.GetById(1);
             Console.WriteLine(employee.ToString());
         }
@@ -28,11 +40,11 @@ namespace WiredBrainCoffee.StorageApp
         {
             Console.WriteLine("\nEmployees:\n");
 
-            employeeRepository.Add(new Employee { FirstName = "Polycarp", Id = 1 });
-            employeeRepository.Add(new Employee { FirstName = "Peterson", Id = 2 });
-            employeeRepository.Add(new Employee { FirstName = "Rodgers", Id = 3 });
-            employeeRepository.Add(new Employee { FirstName = "Duncan", Id = 4 });
-            employeeRepository.Add(new Employee { FirstName = "Shirly", Id = 5 });
+            employeeRepository.Add(new Employee { FirstName = "Polycarp" });
+            employeeRepository.Add(new Employee { FirstName = "Peterson" });
+            employeeRepository.Add(new Employee { FirstName = "Rodgers" });
+            employeeRepository.Add(new Employee { FirstName = "Duncan" });
+            employeeRepository.Add(new Employee { FirstName = "Shirly" });
 
             employeeRepository.Save();
         }
@@ -41,11 +53,11 @@ namespace WiredBrainCoffee.StorageApp
         {
             Console.WriteLine("\nOrganizations:\n");
 
-            organizationRepository.Add(new Organization { Name = "Telemetrics", Id = 1 });
-            organizationRepository.Add(new Organization { Name = "Amazon", Id = 2 });
-            organizationRepository.Add(new Organization { Name = "Commenius", Id = 3 });
-            organizationRepository.Add(new Organization { Name = "Ruzinovska", Id = 4 });
-            organizationRepository.Add(new Organization { Name = "Financier", Id = 5 });
+            organizationRepository.Add(new Organization { Name = "Telemetrics" });
+            organizationRepository.Add(new Organization { Name = "Amazon" });
+            organizationRepository.Add(new Organization { Name = "Commenius" });
+            organizationRepository.Add(new Organization { Name = "Ruzinovska" });
+            organizationRepository.Add(new Organization { Name = "Financier" });
 
             organizationRepository.Save();
         }

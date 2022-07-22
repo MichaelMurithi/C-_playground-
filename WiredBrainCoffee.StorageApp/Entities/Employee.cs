@@ -8,5 +8,4 @@
         public override string ToString() => $"Id: {Id}, FirstName: {FirstName}";
 
     }
-
 }
