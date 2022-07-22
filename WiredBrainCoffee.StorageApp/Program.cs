@@ -23,7 +23,16 @@ namespace WiredBrainCoffee.StorageApp
 
         private static void AddManagers(IWriteRepository<Manager> managerRepository)
         {
-            managerRepository.Add(new Manager { FirstName = "Matej" });
+            var lineManager = new Manager { FirstName = "Matej" };
+            var lineManagerCopy = lineManager.Copy();
+
+            if (lineManagerCopy != null)
+            {
+                lineManagerCopy.FirstName += "_Copy";
+                managerRepository.Add(lineManagerCopy);
+            }
+
+            managerRepository.Add(lineManager);
             managerRepository.Add(new Manager { FirstName = "Marek" });
 
             managerRepository.Save();
