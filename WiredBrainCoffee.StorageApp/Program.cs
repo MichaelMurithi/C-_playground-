@@ -9,7 +9,7 @@ namespace WiredBrainCoffee.StorageApp
     {
         static void Main(string[] args)
         {
-            var employeeAddedCallback = new itemAdded<Employee>(EmployeeAdded);
+            ItemAdded<Employee> employeeAddedCallback = EmployeeAdded;
 
             var employeeRepository = new SqlRepository<Employee>(new StorageAppDbContext(), employeeAddedCallback);
             AddEmployees(employeeRepository);

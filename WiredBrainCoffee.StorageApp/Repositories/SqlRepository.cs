@@ -8,14 +8,14 @@ namespace WiredBrainCoffee.StorageApp.Repositories
     /// In this case itemAdded delegate is Called every time an item is added
     /// </summary>
     /// <param name="item"></param>
-    public delegate void itemAdded<T>(T item);
+    public delegate void ItemAdded<T>(T item);
     public class SqlRepository<T> : IRepository<T> where T : class, IEntity
     {
         private readonly DbContext _dbContext;
-        private readonly itemAdded<T>? _itemAddedCallback;
+        private readonly ItemAdded<T>? _itemAddedCallback;
         private readonly DbSet<T> _dbSet;
 
-        public SqlRepository(DbContext dbContext, itemAdded<T>? itemAddedCallback = null)
+        public SqlRepository(DbContext dbContext, ItemAdded<T>? itemAddedCallback = null)
         {
             _dbContext = dbContext;
             _itemAddedCallback = itemAddedCallback;
