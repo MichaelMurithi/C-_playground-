@@ -8,7 +8,8 @@
     static void Main(string[] args)
     {
         var ubuntuEvent = new Event("Ubuntu", "Zelezna Studenka");
-        var events = new EventRecord("Kenyan BBQ", "Lanfranconi");
+        var summerEvent = new EventRecord("Kenyan BBQ", "Lanfranconi");
+        var similarSummerEvent = summerEvent with { location = "Hubanovo Namestie"};
     }
 
     public class Event
