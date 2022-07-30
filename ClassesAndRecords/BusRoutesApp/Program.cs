@@ -59,7 +59,7 @@ class Program
     {
         Console.WriteLine("\n");
 
-        foreach (var route in routes)
-            Console.WriteLine($"Route: {route}");
+        for (int i =0; i < routes.Count; i++ )
+            Console.WriteLine($"{i+1}. Route: {routes[i]}");
     }
 }
