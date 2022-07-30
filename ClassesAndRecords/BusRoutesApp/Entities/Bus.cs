@@ -4,7 +4,7 @@
     {
         public int Capacity { get; init; }
         public int RouteNumber { get; init; }
-        private Stack<Passenger> _passengers = new();
+        private LinkedList<Passenger> _passengers = new();
         public int Space {get =>Capacity - _passengers.Count;}
 
         public Bus(int routeNumber,int capacity = 5)
@@ -18,21 +18,34 @@
             if(Space < 1)
                 return false;
             
-            _passengers.Push(passenger);
+            _passengers.AddLast(passenger);
             Console.WriteLine($"{passenger} got on the bus");
 
             return true;
         }
 
-        public void ArriveAtTerminus()
+        public void ArriveAt(string place)
         {
-            Console.WriteLine($"\r\nBus {RouteNumber} arriving at the terminus \n");
+            Console.WriteLine($"\r\nBus {RouteNumber} arriving at {place} \n");
+           
+            if (_passengers.Count == 0)
+                return;
+
+            LinkedListNode<Passenger>? currentNode = _passengers.First;
             
-            while(_passengers.Count > 0)
+            do
             {
-                Passenger passenger = _passengers.Pop();
-                Console.WriteLine($"{passenger} got off the bus");
-            }
+                LinkedListNode<Passenger>? nextNode = currentNode?.Next;
+               
+                if(currentNode?.Value.Destination == place)
+                {
+                    Console.WriteLine($"{currentNode.Value} is getting off");
+                    _passengers.Remove(currentNode);
+                }
+                
+                currentNode = nextNode;
+
+            } while(currentNode != null);
 
             Console.WriteLine($"\r\nThere are {_passengers.Count} passengers still on the bus");    
         }

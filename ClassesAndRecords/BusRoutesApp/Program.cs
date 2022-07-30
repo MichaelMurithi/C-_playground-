@@ -11,13 +11,13 @@ class Program
 
         busRoutesService.ShowBusTimes39();
 
-        IBusStopService zooBusStop = new BusStopService("Zoo");
+        IBusStopService zooBusStop = new BusStopService(routesRepository, "Zoo");
         Bus bus39 = new(39);
 
         zooBusStop.PassengersArrive(6);
         zooBusStop.BusArrive(bus39);
 
-        bus39.ArriveAtTerminus();
+        bus39.ArriveAt("Zochova");
     }
 
    
