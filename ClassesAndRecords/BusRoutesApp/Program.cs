@@ -79,7 +79,11 @@ class Program
             return;
         }
 
-        var routes = routesRepository.FindBusesBetween(startingAt, goingTo);
+        var originRoutes = routesRepository.FindBusesTo(startingAt);
+        var destinationRoutes = routesRepository.FindBusesTo(goingTo);
+
+        HashSet<BusRoute> routes = new HashSet<BusRoute>(originRoutes);
+        routes.IntersectWith(destinationRoutes);
 
         if (routes?.Count > 0)
             foreach (var route in routes)
