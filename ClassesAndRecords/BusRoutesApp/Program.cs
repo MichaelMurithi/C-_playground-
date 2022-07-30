@@ -5,7 +5,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        List<BusRoute> busRoutes = BusRouteRepository.InitializeRoutes();
+        List<BusRoute> busRoutes = BusRouteRepository.GetRoutesList();
+        SortedDictionary<int, BusRoute> routes = BusRouteRepository.InitializeRoutes();
+
+        FindRouteByNumber(routes);
         CleanUpRoutes(busRoutes);
         FindBusRoute(busRoutes.ToArray());
     }
@@ -26,7 +29,7 @@ class Program
 
         routes.RemoveAll(route => route.Serves(location));
 
-        Console.WriteLine($"\r\nAfter removing routes serving {location} there {(routes.Count > 1 ? "are" : "is")} {routes.Count} routes");
+        Console.WriteLine($"\r\nAfter removing routes serving {location} there {(routes.Count > 1 ? "are" : "is")} {routes.Count} route(s) available");
         Show(routes);
     }
 
@@ -45,9 +48,22 @@ class Program
 
         if (routes?.Length > 0)
             foreach (var route in routes)
-                Console.WriteLine($"\r\nYou can use route {route}");
+                Console.WriteLine($"\nYou can use route {route}");
         else
-            Console.WriteLine($"\r\nNo routes go to {destination}");
+            Console.WriteLine($"\nNo routes go to {destination}");
+    }
+
+    private static void FindRouteByNumber(SortedDictionary<int, BusRoute> allRoutes)
+    {
+        Console.WriteLine("\r\nWhich route do you want to look up?");
+        int routeNumber = int.Parse(Console.ReadLine() ?? "");
+
+        var routeExists = allRoutes.TryGetValue(routeNumber, out var answer);
+
+        if (routeExists)
+            Console.WriteLine($"\nThe root you asked for is {answer}");
+        else
+            Console.WriteLine($"\nThere is no route with number {routeNumber}");
     }
 
     private static BusRoute[]? FindBusesTo(BusRoute[] routes, string location)

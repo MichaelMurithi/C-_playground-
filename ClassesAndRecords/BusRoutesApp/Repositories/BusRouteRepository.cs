@@ -4,7 +4,21 @@ namespace BusRoutesApp.Repositories
 {
     public class BusRouteRepository
     {
-        public static List<BusRoute> InitializeRoutes()
+        public static SortedDictionary<int, BusRoute> InitializeRoutes()
+        {
+            var routesList = GetRoutesList();
+            var routes = new SortedDictionary<int, BusRoute>
+            {
+                { 40, routesList[0] },
+                { 41, routesList[1] },
+                { 192, routesList[2] },
+                { 39, routesList[3] }
+            };
+
+            return routes;
+        }
+
+        public static List<BusRoute> GetRoutesList()
         {
             List<BusRoute> routes = new()
             {
