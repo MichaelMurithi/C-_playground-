@@ -11,6 +11,7 @@ namespace BusRoutesApp.Services
         {
             _routesRepository = repository;
         }
+
         public void CleanUpRoutes()
         {
             Console.WriteLine($"\r\nBefore: There are {_routesRepository.Count} routes:");

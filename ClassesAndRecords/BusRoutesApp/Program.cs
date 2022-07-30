@@ -10,6 +10,14 @@ class Program
         IBusRoutesService busRoutesService = new BusRoutesService(routesRepository);
 
         busRoutesService.ShowBusTimes39();
+
+        IBusStopService zooBusStop = new BusStopService("Zoo");
+        Bus bus39 = new(39);
+
+        zooBusStop.PassengersArrive(6);
+        zooBusStop.BusArrive(bus39);
+
+        bus39.ArriveAtTerminus();
     }
 
    
