@@ -1,6 +1,6 @@
 ﻿namespace BusRoutesApp.Entities
 {
-    public class BusRoute
+    public record BusRoute
     {
         public int Number { get; }
         public string Origin => PlacesServed[0];

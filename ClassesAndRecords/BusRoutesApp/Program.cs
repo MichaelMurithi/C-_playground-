@@ -5,18 +5,17 @@ class Program
 {
     static void Main(string[] args)
     {
-        List<BusRoute> busRoutes = BusRouteRepository.GetRoutesList();
-        SortedDictionary<int, BusRoute> routes = BusRouteRepository.InitializeRoutes();
+        IBusRouteRepository routesRepository = new BusRouteRepository();
 
-        FindRouteByNumber(routes);
-        CleanUpRoutes(busRoutes);
-        FindBusRoute(busRoutes.ToArray());
+        FindRouteByNumber(routesRepository);
+        CleanUpRoutes(routesRepository);
+        FindBusRoute(routesRepository);
     }
 
-    private static void CleanUpRoutes(List<BusRoute> routes)
+    private static void CleanUpRoutes(IBusRouteRepository routesRepository)
     {
-        Console.WriteLine($"\r\nBefore: There are {routes.Count} routes:");
-        Show(routes);
+        Console.WriteLine($"\r\nBefore: There are {routesRepository.Count()} routes:");
+        Show(routesRepository.GetAll());
 
         Console.WriteLine("\r\nWhich destination do you want to remove?");
         string location = Console.ReadLine() ?? string.Empty;
@@ -27,13 +26,13 @@ class Program
             return;
         }
 
-        routes.RemoveAll(route => route.Serves(location));
+        routesRepository.RemoveAllRoutesTo(location);
 
-        Console.WriteLine($"\r\nAfter removing routes serving {location} there {(routes.Count > 1 ? "are" : "is")} {routes.Count} route(s) available");
-        Show(routes);
+        Console.WriteLine($"\r\nAfter removing routes serving {location} there {(routesRepository.Count() > 1 ? "are" : "is")} {routesRepository.Count()} route(s) available");
+        Show(routesRepository.GetAll());
     }
 
-    private static void FindBusRoute(BusRoute[] busRoutes)
+    private static void FindBusRoute(IBusRouteRepository routesRepository)
     {
         Console.WriteLine("\r\nWhere do you want to go to?");
         string? destination = Console.ReadLine();
@@ -44,31 +43,26 @@ class Program
             return;
         }
 
-        BusRoute[]? routes = FindBusesTo(busRoutes, destination);
+        var routes = routesRepository.FindBusesTo(destination);
 
-        if (routes?.Length > 0)
+        if (routes?.Count > 0)
             foreach (var route in routes)
                 Console.WriteLine($"\nYou can use route {route}");
         else
             Console.WriteLine($"\nNo routes go to {destination}");
     }
 
-    private static void FindRouteByNumber(SortedDictionary<int, BusRoute> allRoutes)
+    private static void FindRouteByNumber(IBusRouteRepository routeSRepository)
     {
         Console.WriteLine("\r\nWhich route do you want to look up?");
         int routeNumber = int.Parse(Console.ReadLine() ?? "");
 
-        var routeExists = allRoutes.TryGetValue(routeNumber, out var answer);
+        var route = routeSRepository.FindByNumber(routeNumber);
 
-        if (routeExists)
-            Console.WriteLine($"\nThe root you asked for is {answer}");
+        if (route != null)
+            Console.WriteLine($"\nThe root you asked for is {route}");
         else
             Console.WriteLine($"\nThere is no route with number {routeNumber}");
-    }
-
-    private static BusRoute[]? FindBusesTo(BusRoute[] routes, string location)
-    {
-        return Array.FindAll(routes, (route) => route.Serves(location)); 
     }
 
     private static void Show(List<BusRoute> routes)
