@@ -20,7 +20,7 @@
 
         public bool Serves(string destination)
         {
-            return Array.Exists(PlacesServed, (place) => place == destination);
+            return Array.Exists(PlacesServed, (place) => place.ToLower() == destination.ToLower());
         }
     }
 }
