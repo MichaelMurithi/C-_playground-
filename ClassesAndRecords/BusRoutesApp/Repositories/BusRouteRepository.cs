@@ -52,5 +52,10 @@ namespace BusRoutesApp.Repositories
         {
             return _allRoutes.RemoveAll(route => route.Serves(location));
         }
+
+        public List<BusRoute> FindBusesBetween(string location1, string location2)
+        {
+            return _allRoutes.FindAll(route => route.Serves(location1) && route.Serves(location2));
+        }
     }
 }

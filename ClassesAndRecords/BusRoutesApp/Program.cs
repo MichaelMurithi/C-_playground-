@@ -9,7 +9,7 @@ class Program
 
         FindRouteByNumber(routesRepository);
         CleanUpRoutes(routesRepository);
-        FindBusRoute(routesRepository);
+        FindConnection(routesRepository);
     }
 
     private static void CleanUpRoutes(IBusRouteRepository routesRepository)
@@ -52,17 +52,40 @@ class Program
             Console.WriteLine($"\nNo routes go to {destination}");
     }
 
-    private static void FindRouteByNumber(IBusRouteRepository routeSRepository)
+    private static void FindRouteByNumber(IBusRouteRepository routesRepository)
     {
         Console.WriteLine("\r\nWhich route do you want to look up?");
         int routeNumber = int.Parse(Console.ReadLine() ?? "");
 
-        var route = routeSRepository.FindByNumber(routeNumber);
+        var route = routesRepository.FindByNumber(routeNumber);
 
         if (route != null)
             Console.WriteLine($"\nThe root you asked for is {route}");
         else
             Console.WriteLine($"\nThere is no route with number {routeNumber}");
+    }
+
+    private static void FindConnection(IBusRouteRepository routesRepository)
+    {
+        Console.WriteLine("\r\nWhere are you?");
+        string? startingAt = Console.ReadLine();
+
+        Console.WriteLine("\r\nWhere do you want to go to?");
+        string? goingTo = Console.ReadLine();
+
+        if (startingAt == null || goingTo == null)
+        {
+            Console.WriteLine("\r\nSorry, we could not figure out your destination or location");
+            return;
+        }
+
+        var routes = routesRepository.FindBusesBetween(startingAt, goingTo);
+
+        if (routes?.Count > 0)
+            foreach (var route in routes)
+                Console.WriteLine($"\nYou can use route {route}");
+        else
+            Console.WriteLine($"\nNo routes from {startingAt} go to {goingTo}");
     }
 
     private static void Show(List<BusRoute> routes)

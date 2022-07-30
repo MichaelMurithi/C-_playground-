@@ -9,5 +9,6 @@ namespace BusRoutesApp.Repositories
         List<BusRoute> FindBusesTo(string location);
         BusRoute? FindByNumber(int routeNumber);
         int RemoveAllRoutesTo(string location);
+        List<BusRoute> FindBusesBetween(string location1, string location2);
     }
 }
