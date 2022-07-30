@@ -102,8 +102,9 @@ class Program
         {
             Console.Write(route39.PlacesServed[iPlace].PadRight(20));
 
-            for (int IJourney = 0; IJourney < schedule39.Times.GetLength(1); IJourney++)
-                Console.Write(schedule39.Times[iPlace, IJourney] + " ");
+            foreach(string time in schedule39.Times[iPlace])
+                Console.Write(time.PadRight(6));
+
             Console.WriteLine();
         }
     }
