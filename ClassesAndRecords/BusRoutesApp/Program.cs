@@ -6,16 +6,21 @@ class Program
     static void Main(string[] args)
     {
         BusRoute[] busRoutes = BusRouteRepository.InitializeRoutes();
-        
+
+        FindBusRoute(busRoutes);
+    }
+
+    private static void FindBusRoute(BusRoute[] busRoutes)
+    {
         Console.WriteLine("Where do you want to go to?");
         string? destination = Console.ReadLine();
 
-        if(destination == null)
+        if (destination == null)
         {
-           Console.WriteLine("\nSorry, we could not figure out your destination");
+            Console.WriteLine("\nSorry, we could not figure out your destination");
             return;
         }
-       
+
         BusRoute[]? routes = FindBusesTo(busRoutes, destination);
 
         if (routes?.Length > 0)
