@@ -6,6 +6,7 @@ namespace BusRoutesApp.Repositories
     {
         private readonly List<BusRoute> _allRoutes;
         private readonly SortedDictionary<int, BusRoute> _routesReffence;
+        public BusTimes BusTimesRoute39 { get; }
 
         public BusRouteRepository()
         {
@@ -24,17 +25,27 @@ namespace BusRoutesApp.Repositories
                 { 192, _allRoutes[2] },
                 { 39, _allRoutes[3] }
             };
+            string[,] timeRoute39 =
+            {
+                {"7:04", "7:14", "7:24", "7:34", "7:44", "7:54" },
+                {"8:04", "8:14", "8:24", "8:34", "8:44", "8:54" },
+                {"9:04", "9:14", "9:24", "9:34", "9:44", "9:54" },
+                {"10:04", "10:14", "10:24", "10:34", "10:44", "10:54" },
+                {"11:04", "11:14", "11:24", "11:34", "11:44", "11:54" },
+                {"12:04", "12:14", "12:24", "12:34", "12:44", "12:54" }
+            };
+
+            BusTimesRoute39 = new BusTimes(_allRoutes[3], timeRoute39);
         }
 
-        public int Count()
-        {
-            return _allRoutes.Count;
-        }
+        public int Count()  => _allRoutes.Count;
 
         public List<BusRoute> GetAll()
         {
             return _allRoutes;
         }
+
+        public BusTimes GetBusTimes() => BusTimesRoute39;
 
         public BusRoute? FindByNumber(int routeNumber)
         {

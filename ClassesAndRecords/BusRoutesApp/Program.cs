@@ -7,14 +7,15 @@ class Program
     {
         IBusRouteRepository routesRepository = new BusRouteRepository();
 
-        FindRouteByNumber(routesRepository);
-        CleanUpRoutes(routesRepository);
-        FindConnection(routesRepository);
+        ShowBusTimes39(routesRepository);
+        //FindRouteByNumber(routesRepository);
+        //CleanUpRoutes(routesRepository);
+        //FindConnection(routesRepository);
     }
 
     private static void CleanUpRoutes(IBusRouteRepository routesRepository)
     {
-        Console.WriteLine($"\r\nBefore: There are {routesRepository.Count()} routes:");
+        Console.WriteLine($"\r\nBefore: There are {routesRepository.Count} routes:");
         Show(routesRepository.GetAll());
 
         Console.WriteLine("\r\nWhich destination do you want to remove?");
@@ -90,6 +91,21 @@ class Program
                 Console.WriteLine($"\nYou can use route {route}");
         else
             Console.WriteLine($"\nNo routes from {startingAt} go to {goingTo}");
+    }
+
+    private static void ShowBusTimes39(IBusRouteRepository routesRepository)
+    {
+        BusTimes schedule39 = routesRepository.GetBusTimes();
+        BusRoute route39 = schedule39.Route;
+
+        for(int iPlace = 0; iPlace < route39.PlacesServed.Length; iPlace++)
+        {
+            Console.Write(route39.PlacesServed[iPlace].PadRight(20));
+
+            for (int IJourney = 0; IJourney < schedule39.Times.GetLength(1); IJourney++)
+                Console.Write(schedule39.Times[iPlace, IJourney] + " ");
+            Console.WriteLine();
+        }
     }
 
     private static void Show(List<BusRoute> routes)
