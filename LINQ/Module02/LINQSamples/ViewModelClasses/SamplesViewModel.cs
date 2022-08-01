@@ -28,7 +28,10 @@ namespace LINQSamples
     public void GetAllLooping()
     {
       List<Product> list = new List<Product>();
-
+            foreach (Product product in Products)
+            {
+                list.Add(product);
+            }
      
       ResultText = $"Total Products: {list.Count}";
     }
