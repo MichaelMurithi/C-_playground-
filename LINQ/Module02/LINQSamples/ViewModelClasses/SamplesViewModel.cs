@@ -47,11 +47,11 @@ namespace LINQSamples
 
       if (UseQuerySyntax) {
         // Query Syntax
-        
+        list = (from prod in Products select prod).ToList();
       }
       else {
         // Method Syntax
-        
+        list = Products.Select(prod => prod).ToList();
       }
 
       ResultText = $"Total Products: {list.Count}";
@@ -67,13 +67,15 @@ namespace LINQSamples
       StringBuilder sb = new StringBuilder(1024);
       List<string> list = new List<string>();
 
-      if (UseQuerySyntax) {
-        // Query Syntax
-        
+      if (UseQuerySyntax) 
+      {
+      // Query Syntax
+       list.AddRange(from prod in Products select prod.Name);
+
       }
       else {
         // Method Syntax
-        
+        list.AddRange(Products.Select(prod => prod.Name));
       }
 
       foreach (string item in list) {
