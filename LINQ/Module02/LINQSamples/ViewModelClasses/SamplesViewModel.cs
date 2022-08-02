@@ -134,24 +134,37 @@ namespace LINQSamples
             if (UseQuerySyntax)
             {
                 // Query Syntax
-
+                var products = (from prod in Products
+                    select new
+                    {
+                        Identifier = prod.ProductID,
+                        ProductName = prod.Name,
+                        ProductSize = prod.Size
+                    });
                 // Loop through anonymous class
-                //foreach (var prod in products) {
-                //  sb.AppendLine($"Product ID: {prod.Identifier}");
-                //  sb.AppendLine($"   Product Name: {prod.ProductName}");
-                //  sb.AppendLine($"   Product Size: {prod.ProductSize}");
-                //}
+                foreach (var prod in products)
+                {
+                    sb.AppendLine($"Product ID: {prod.Identifier}");
+                    sb.AppendLine($"   Product Name: {prod.ProductName}");
+                    sb.AppendLine($"   Product Size: {prod.ProductSize}");
+                }
             }
             else
             {
                 // Method Syntax
-
+                var products = Products.Select(prod => new
+                {
+                    Identifier = prod.ProductID,
+                    ProductName = prod.Name,
+                    ProductSize = prod.Size
+                });
                 // Loop through anonymous class
-                //foreach (var prod in products) {
-                //  sb.AppendLine($"Product ID: {prod.Identifier}");
-                //  sb.AppendLine($"   Product Name: {prod.ProductName}");
-                //  sb.AppendLine($"   Product Size: {prod.ProductSize}");
-                //}
+                foreach (var prod in products)
+                {
+                    sb.AppendLine($"Product ID: {prod.Identifier}");
+                    sb.AppendLine($"   Product Name: {prod.ProductName}");
+                    sb.AppendLine($"   Product Size: {prod.ProductSize}");
+                }
             }
 
             ResultText = sb.ToString();

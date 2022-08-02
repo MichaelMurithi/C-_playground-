@@ -10,7 +10,7 @@ namespace LINQSamples
             SamplesViewModel vm = new SamplesViewModel
             {
                 // Use Query or Method Syntax?
-                UseQuerySyntax = true
+                UseQuerySyntax = false
             };
 
             // Call a sample method
