@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LINQSamples.RepositoryClasses;
 
 namespace LINQSamples
 {
@@ -270,7 +271,7 @@ namespace LINQSamples
 
             }
 
-            ResultText = $"\nTotal Products with size 60: {Products.Count}";
+            ResultText = $"\nTotal Products with size {productSize}: {Products.Count}";
         }
         #endregion
 
@@ -297,7 +298,31 @@ namespace LINQSamples
 
             }
 
-            ResultText = $"\nTotal Products with size 60: {Products.Count}";
+            ResultText = $"\nTotal Products with color :  name starting in {searchTerm}: {Products.Count}";
+        }
+        #endregion
+
+        #region WhereExtensionMethod
+        /// <summary>
+        /// Use where with extension methods
+        /// </summary>
+        public void WhereExtensionMethod()
+        {
+            var searchColor = "Blue";
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                Products = (from prod in Products select prod).ByColor(searchColor).ToList();
+            }
+            else
+            {
+                // Method Syntax
+                Products = Products.ByColor(searchColor).ToList();
+
+            }
+
+            ResultText = $"\nTotal Products with color {searchColor}: {Products.Count}";
         }
         #endregion
     }
