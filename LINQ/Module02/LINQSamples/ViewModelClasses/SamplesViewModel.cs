@@ -246,5 +246,59 @@ namespace LINQSamples
             ResultText = $"Total Products: {Products.Count}";
         }
         #endregion
+
+        #region WhereOneField
+        /// <summary>
+        /// Use Where with one field to filter values
+        /// </summary>
+        public void WhereOneField()
+        {
+            var productSize = "60";
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                Products = (from prod in Products
+                            where prod.Size == productSize
+                            select prod).ToList();
+
+            }
+            else
+            {
+                // Method Syntax
+                Products = Products.Where(prod => prod.Size == productSize).ToList();
+
+            }
+
+            ResultText = $"\nTotal Products with size 60: {Products.Count}";
+        }
+        #endregion
+
+        #region WhereTwoFields
+        /// <summary>
+        /// Use where with multiple filter conditions
+        /// </summary>
+        public void WhereTwoFields()
+        {
+            var productSize = "60";
+            var searchTerm = "L";
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                Products = (from prod in Products
+                            where prod.Size == productSize && prod.Name.StartsWith(searchTerm)
+                            select prod).ToList();
+            }
+            else
+            {
+                // Method Syntax
+                Products = Products.Where(prod => prod.Size == productSize && prod.Name.StartsWith(searchTerm)).ToList();
+
+            }
+
+            ResultText = $"\nTotal Products with size 60: {Products.Count}";
+        }
+        #endregion
     }
 }
