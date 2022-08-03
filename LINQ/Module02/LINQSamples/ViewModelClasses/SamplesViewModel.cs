@@ -136,12 +136,12 @@ namespace LINQSamples
             {
                 // Query Syntax
                 var products = (from prod in Products
-                    select new
-                    {
-                        Identifier = prod.ProductID,
-                        ProductName = prod.Name,
-                        ProductSize = prod.Size
-                    });
+                                select new
+                                {
+                                    Identifier = prod.ProductID,
+                                    ProductName = prod.Name,
+                                    ProductSize = prod.Size
+                                });
                 // Loop through anonymous class
                 foreach (var prod in products)
                 {
@@ -208,8 +208,8 @@ namespace LINQSamples
             {
                 // Query Syntax
                 Products = (from prod in Products
-                           orderby prod?.Name descending
-                           select prod).ToList();
+                            orderby prod?.Name descending
+                            select prod).ToList();
 
             }
             else
@@ -323,6 +323,73 @@ namespace LINQSamples
             }
 
             ResultText = $"\nTotal Products with color {searchColor}: {Products.Count}";
+        }
+        #endregion
+
+        #region SingleItemUsingFirst
+        /// <summary>
+        /// Using First() to select the first single item
+        /// </summary>
+        public void SingleItemUsingFirst()
+        {
+            Product value;
+            var searchColor = "Blue";
+
+            try
+            {
+                if (UseQuerySyntax)
+                {
+                    // Query Syntax
+                    value = (from prod in Products select prod).First(prod => prod.Color == searchColor);
+                }
+                else
+                {
+                    // Method Syntax
+                    value = Products.First(prod => prod.Color == searchColor);
+
+                }
+
+                ResultText = $"\nFound: \n {value}";
+
+            }
+            catch
+            {
+                ResultText = "Not found";
+            }
+        }
+        #endregion
+
+        #region SingleItemUsingFirstOrDefault
+        /// <summary>
+        /// Using FirstOrDefault() to select the first single item
+        /// It does not throw na exception but instead returns a null value
+        /// </summary>
+        public void SingleItemUsingFirstOrDefault()
+        {
+            Product value;
+            var searchColor = "Blue";
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                value = (from prod in Products select prod).FirstOrDefault(prod => prod.Color == searchColor);
+            }
+            else
+            {
+                // Method Syntax
+                value = Products.FirstOrDefault(prod => prod.Color == searchColor);
+
+            }
+
+            if (value == null)
+            {
+                ResultText = "Not found";
+            }
+            else
+            {
+                ResultText = $"\nFound: \n {value}";
+
+            }
         }
         #endregion
     }
