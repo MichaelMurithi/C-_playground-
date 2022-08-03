@@ -10,11 +10,11 @@ namespace LINQSamples
             SamplesViewModel vm = new SamplesViewModel
             {
                 // Use Query or Method Syntax?
-                UseQuerySyntax = false
+                UseQuerySyntax = true
             };
 
             // Call a sample method
-            vm.SingleItemUsingLastOrDefault();
+            vm.SingleItemUsingSingleOrDefault();
 
             // Display Product Collection
             foreach (var item in vm.Products)

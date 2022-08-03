@@ -459,5 +459,72 @@ namespace LINQSamples
             }
         }
         #endregion
+
+        #region Single
+        /// <summary>
+        /// Using Single() to select the last single item
+        /// </summary>
+        public void Single()
+        {
+            Product value;
+            var searchColor = "Blue";
+
+            try
+            {
+                if (UseQuerySyntax)
+                {
+                    // Query Syntax
+                    value = (from prod in Products select prod).Single(prod => prod.Color == searchColor);
+                }
+                else
+                {
+                    // Method Syntax
+                    value = Products.Single(prod => prod.Color == searchColor);
+
+                }
+
+                ResultText = $"\nFound: \n {value}";
+
+            }
+            catch
+            {
+                ResultText = "Not found";
+            }
+        }
+        #endregion
+
+        #region SingleItemUsingSingleOrDefault
+        /// <summary>
+        /// Using FirstOrDefault() to select the first single item
+        /// It does not throw na exception but instead returns a null value
+        /// </summary>
+        public void SingleItemUsingSingleOrDefault()
+        {
+            Product value;
+            var searchColor = "Blue";
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                value = (from prod in Products select prod).SingleOrDefault(prod => prod.Color == searchColor);
+            }
+            else
+            {
+                // Method Syntax
+                value = Products.SingleOrDefault(prod => prod.Color == searchColor);
+
+            }
+
+            if (value == null)
+            {
+                ResultText = "Not found";
+            }
+            else
+            {
+                ResultText = $"\nFound: \n {value}";
+
+            }
+        }
+        #endregion
     }
 }
