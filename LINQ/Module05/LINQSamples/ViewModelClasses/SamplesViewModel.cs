@@ -198,11 +198,12 @@ namespace LINQSamples
             if (UseQuerySyntax)
             {
                 // Query Syntax
-
+                colors = (from prod in Products select prod.Color).Distinct().ToList();
             }
             else
             {
                 // Method Syntax
+                colors = Products.Select(prod => prod.Color).Distinct().ToList();
 
             }
 
