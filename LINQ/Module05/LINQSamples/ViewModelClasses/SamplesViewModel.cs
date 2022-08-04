@@ -33,11 +33,13 @@ namespace LINQSamples
     {
       if (UseQuerySyntax) {
         // Query Syntax
+        Products = (from prod in Products let tmp = prod.NameLength = prod.Name.Length
+                    select prod).ToList();
 
       }
       else {
         // Method Syntax
-
+        Products.ForEach(prod => prod.NameLength = prod.Name.Length);
       }
 
       ResultText = $"Total Products: {Products.Count}";
