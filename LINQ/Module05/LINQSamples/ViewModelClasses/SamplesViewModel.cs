@@ -56,12 +56,14 @@ namespace LINQSamples
     public void ForEachCallingMethod()
     {
       if (UseQuerySyntax) {
-        // Query Syntax
+        Products = (from prod in Products 
+                    let tmp = prod.TotalSales = SalesForProduct(prod)
+                    select prod).ToList();
 
       }
       else {
         // Method Syntax
-
+        Products.ForEach(prod => prod.TotalSales = SalesForProduct(prod));
       }
 
       ResultText = $"Total Products: {Products.Count}";
