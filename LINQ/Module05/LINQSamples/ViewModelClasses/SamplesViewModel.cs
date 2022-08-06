@@ -414,5 +414,71 @@ namespace LINQSamples
             Products.Clear();
         }
         #endregion
+
+        #region Except
+        /// <summary>
+        /// Using LINQ's Except() to find all values in a list but not the other
+        /// For simple data types (int, decimal, e.t.c) checks values
+        /// Object data types checks reference
+        /// To check values in properties use comparer class
+        /// </summary>
+        public void ExceptIntegers()
+        {
+            List<int> exceptions;
+
+            List<int> list1 = new List<int> { 1, 2, 3, 4, 5};
+            List<int> list2 = new List<int> { 3, 4, 5 };
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                exceptions = (from num in list1 select num).Except(list2).ToList();
+            }
+            else
+            {
+                // Method Syntax
+                exceptions = list1.Except(list2).ToList();
+            }
+
+            ResultText = string.Empty;
+            foreach (int i in exceptions)
+            {
+                ResultText += "Number: " + i + " is not contained in both lists" + Environment.NewLine;
+            }
+
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
+
+        #region ExceptUsingComparer
+        /// <summary>
+        /// Using LINQ's Except() with a comparer class to compare find products that don't belong to both lists
+        /// </summary>
+        public void ExceptUsingComparer()
+        {
+            ProductComparer comparer = new();
+
+            List<Product> list1 = ProductRepository.GetAll();
+            List<Product> list2 = ProductRepository.GetAll();
+
+            //Remove all products with color 'Blue' from list2
+            list2.RemoveAll(prod => prod.Color == "Blue");
+
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                Products = (from prod in list1 select prod).Except(list2, comparer).ToList();
+            }
+            else
+            {
+                // Method Syntax
+                Products = list1.Except(list2, comparer).ToList();
+            }
+
+            ResultText = $"\nTotal products exceptions: {Products.Count}";
+        }
+        #endregion
     }
 }
