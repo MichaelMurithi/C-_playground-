@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LINQSamples.EntityClasses;
 
 namespace LINQSamples
 {
@@ -213,6 +214,121 @@ namespace LINQSamples
                 Console.WriteLine($"Color: {color}");
             }
             Console.WriteLine($"Total Colors: {colors.Count}");
+
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
+
+        #region All
+        /// <summary>
+        /// Using All() to see if items meet a condition
+        /// </summary>
+        public void All()
+        {
+            string searchTerm = " ";
+            bool results;
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                results = (from prod in Products select prod).All(prod => prod.Name.Contains(searchTerm));
+            }
+            else
+            {
+                // Method Syntax
+                results = Products.All(prod => prod.Name.Contains(searchTerm));
+
+            }
+
+            ResultText = $"Do all Name properties contain a '{searchTerm}'? {results}";
+           
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
+
+        #region Any
+        /// <summary>
+        /// Using Any() to see if there is an item that meets a condition
+        /// </summary>
+        public void Any()
+        {
+            string searchColor = "Blue";
+            bool results;
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                results = (from prod in Products select prod).Any(prod => prod.Color == searchColor);
+            }
+            else
+            {
+                // Method Syntax
+                results = Products.All(prod => prod.Color == searchColor);
+
+            }
+
+            ResultText = $"Do we a have a product of color '{searchColor}'? {results}";
+
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
+
+        #region LINQContains
+        /// <summary>
+        /// Using LINQ's Contains() to see if a value of simple type exists in a collection
+        /// </summary>
+        public void LINQContains()
+        {
+            bool value;
+            List<int> numbers = new List<int> { 1, 2, 3 };
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                value = (from num in numbers select num).Contains(3);
+            }
+            else
+            {
+                // Method Syntax
+                value = numbers.Contains(3);
+
+            }
+
+            ResultText = $"Do we a have 3 in our numbers list? {value}";
+
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
+
+        #region EqualityComparer
+        /// <summary>
+        /// Using LINQ's Contains() with an EqualityComparer class to see if a product exists exists in a collection
+        /// </summary>
+        public void LINQEquaalityComparer()
+        {
+            int productId = 744;
+            bool searchedProductExists;
+
+            ProductIdComparer comparer = new();
+            Product prodToSearch = new() { ProductID = productId };
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                searchedProductExists = (from prod in Products select prod).Contains(prodToSearch, comparer);
+            }
+            else
+            {
+                // Method Syntax
+                searchedProductExists = Products.Contains(prodToSearch, comparer);
+
+            }
+
+            ResultText = $"Do we a have prodToSerch in our products list? {searchedProductExists}";
 
             // Clear products
             Products.Clear();
