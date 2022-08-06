@@ -334,5 +334,85 @@ namespace LINQSamples
             Products.Clear();
         }
         #endregion
+
+        #region SequenceEqual
+        /// <summary>
+        /// Using LINQ's SequenceEqual() to compare 2 collections for equality
+        /// When using simple data types, it checks values
+        /// When using object data types, it checks refference.
+        /// </summary>
+        public void SequenceEqualIntegers()
+        {
+            bool results;
+
+            List<int> numbers1 = new List<int> { 1, 2, 3, 4, 5 };
+            List<int> numbers2 = new List<int> { 1, 2, 3, 4, 5 };
+
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                results = (from num in numbers1 select num).SequenceEqual(numbers2);
+            }
+            else
+            {
+                // Method Syntax
+                results = numbers1.SequenceEqual(numbers2);
+
+            }
+
+            if (results)
+            {
+                Console.WriteLine("The provided lists of numbers are equal");
+            }else
+            {
+                Console.WriteLine("The provided lists of numbers are not equal");
+            }
+
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
+
+        #region SequenceEqual
+        /// <summary>
+        /// Using LINQ's SequenceEqual() to compare 2 products collections for equality
+        /// </summary>
+        public void SequenceEqualUsingComparer()
+        {
+            bool results;
+            ProductComparer comparer = new();
+
+            List<Product> list1 = ProductRepository.GetAll();
+            List<Product> list2 = ProductRepository.GetAll();
+
+            //Remove an element from list2
+            list2.RemoveAt(0);
+
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                results = (from prod in list1 select prod).SequenceEqual(list2, comparer);
+            }
+            else
+            {
+                // Method Syntax
+                results = list1.SequenceEqual(list2, comparer);
+            }
+
+            if (results)
+            {
+                Console.WriteLine("The provided lists of products are equal");
+            }
+            else
+            {
+                Console.WriteLine("The provided lists of products are not equal");
+            }
+
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
     }
 }
