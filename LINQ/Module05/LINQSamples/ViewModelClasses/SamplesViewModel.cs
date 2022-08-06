@@ -480,5 +480,97 @@ namespace LINQSamples
             ResultText = $"\nTotal products exceptions: {Products.Count}";
         }
         #endregion
+
+        #region Intersect
+        /// <summary>
+        /// Using LINQ's Intersect() with a comparer class to compare find products that belong to both lists
+        /// </summary>
+        public void Intersect()
+        {
+            ProductComparer comparer = new();
+
+            List<Product> list1 = ProductRepository.GetAll();
+            List<Product> list2 = ProductRepository.GetAll();
+
+            //Remove all products with color 'Blue' from list2
+            list2.RemoveAll(prod => prod.Color == "Blue");
+            //Remove all products with color 'Blue' from list2
+            list2.RemoveAll(prod => prod.Color == "Black");
+
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                Products = (from prod in list1 select prod).Intersect(list2, comparer).ToList();
+            }
+            else
+            {
+                // Method Syntax
+                Products = list1.Intersect(list2, comparer).ToList();
+            }
+
+            ResultText = $"\nCommon products in both lists: {Products.Count}";
+        }
+        #endregion
+
+        #region Union
+        /// <summary>
+        /// Using LINQ's Union() with a comparer class to join two collections and check for duplicates
+        /// </summary>
+        public void Union()
+        {
+            ProductComparer comparer = new();
+
+            List<Product> list1 = ProductRepository.GetAll();
+            List<Product> list2 = ProductRepository.GetAll();
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                Products = (from prod in list1 select prod)
+                    .Union(list2, comparer)
+                    .OrderBy(prod => prod.Name)
+                    .ToList();
+            }
+            else
+            {
+                // Method Syntax
+                Products = list1.Union(list2, comparer)
+                    .OrderBy(prod => prod.Name)
+                    .ToList();
+            }
+
+            ResultText = $"\nUnion of products in both lists: {Products.Count}";
+        }
+        #endregion
+
+        #region Concat
+        /// <summary>
+        /// Using LINQ's Concat() with a comparer class to join two collections and including duplicates
+        /// </summary>
+        public void Concat()
+        {
+            List<Product> list1 = ProductRepository.GetAll();
+            List<Product> list2 = ProductRepository.GetAll();
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                Products = (from prod in list1 select prod)
+                    .Concat(list2)
+                    .OrderBy(prod => prod.Name)
+                    .ToList();
+            }
+            else
+            {
+                // Method Syntax
+                Products = list1.Concat(list2)
+                    .OrderBy(prod => prod.Name)
+                    .ToList();
+            }
+
+            ResultText = $"\nConcatination of products in both lists: {Products.Count}";
+        }
+        #endregion
     }
 }
