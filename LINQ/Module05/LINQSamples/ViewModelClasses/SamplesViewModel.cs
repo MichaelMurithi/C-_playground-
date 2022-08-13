@@ -806,5 +806,50 @@ namespace LINQSamples
             Products.Clear();
         }
         #endregion
+
+        #region GroupBy
+        /// <summary>
+        /// GroupBy in LINQ and using IGrouping<> interface
+        /// </summary>
+        public void GroupBy()
+        {
+            StringBuilder sb = new(2048);
+            IEnumerable<IGrouping<string, Product>> sizeGroup;
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                sizeGroup = (from prod in Products
+                             orderby prod.Size
+                             group prod by prod.Size);
+            }
+            else
+            {
+                // Method Syntax
+                sizeGroup = Products.OrderBy(prod => prod.Size)
+                                    .GroupBy(prod => prod.Size);
+            }
+            //  Loop through each size
+            foreach (var group in sizeGroup)
+            {
+                //The value in the key property is
+                // whatever data we are grouping upon
+                sb.AppendLine($"Size: {group.Key} Count: {group.Count()}");
+
+                foreach(var prod in group)
+                {
+                    sb.Append($"    ProductID: {prod.ProductID}");
+                    sb.Append($"    Name: {prod.Name}");
+                    sb.AppendLine($"    Color: {prod.Color}");
+                }
+                sb.AppendLine("");
+            }
+
+            ResultText = sb.ToString();
+
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
     }
 }
