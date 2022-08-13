@@ -654,5 +654,73 @@ namespace LINQSamples
             Products.Clear();
         }
         #endregion
+
+        #region GroupJoin
+        /// <summary>
+        /// Similar to creating a one-to-many relationship
+        /// Two or more collections are needed
+        /// At least one property in each collection must share equal values
+        /// Using LINQ's GroupJoin() to join sales and products table
+        /// using 'join' and 'into' for query syntax
+        /// </summary>
+        public void GroupJoin()
+        {
+            StringBuilder sb = new(2048);
+            IEnumerable<ProductSales> grouped;
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax is simply a 'join...into'
+                grouped = (from prod in Products
+                             join sale in Sales
+                             on prod.ProductID equals sale.ProductID
+                             into sales
+                             select new ProductSales
+                             {
+                                 Product = prod,
+                                 Sales = sales
+                             });
+            }
+            else
+            {
+                // Method Syntax uses 'GroupJoin()'
+                grouped = Products.GroupJoin(Sales,
+                    prod => prod.ProductID,
+                    sale => sale.ProductID,
+                    (prod, sales) => new ProductSales
+                    {
+                        Product = prod,
+                        Sales = sales.ToList()
+                    });
+            }
+            //  Loop through each product
+            foreach(var productSales in grouped)
+            {
+                sb.AppendLine($"Product: {productSales.Product}");
+
+                if(productSales.Sales.Count() > 0)
+                {
+                    sb.AppendLine($"    ** Sales **");
+                    foreach(var sale in productSales.Sales)
+                    {
+                        sb.Append($"        SalesOrderID: {sale.SalesOrderID}");
+                        sb.Append($"        Qty: {sale.OrderQty}");
+                        sb.Append($"        Total: {sale.LineTotal}");
+
+                    }
+                }
+                else
+                {
+                    sb.AppendLine("     ** No Sales for Product **");
+                }
+                sb.AppendLine("");
+            }
+
+            ResultText = sb.ToString();
+
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
     }
 }
