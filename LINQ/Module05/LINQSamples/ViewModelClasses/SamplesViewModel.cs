@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using LINQSamples.EntityClasses;
 
 namespace LINQSamples
@@ -570,6 +571,87 @@ namespace LINQSamples
             }
 
             ResultText = $"\nConcatination of products in both lists: {Products.Count}";
+        }
+        #endregion
+
+        #region Equijoin /Inner Join
+        /// <summary>
+        /// An inner join in SQL
+        /// Two or more collections are needed
+        /// At least one property in each collection must share equal values
+        /// Using LINQ's Join() to perform an inner join of sales and products table
+        /// </summary>
+        public void InnerJoin()
+        {
+            StringBuilder sb = new(2048);
+            int count = 0;
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                var query = (from prod in Products
+                             join sale in Sales
+                             on prod.ProductID equals sale.ProductID
+                             select new
+                             {
+                                 prod.ProductID,
+                                 prod.Name,
+                                 prod.Color,
+                                 prod.StandardCost,
+                                 prod.ListPrice,
+                                 prod.Size,
+                                 sale.SalesOrderID,
+                                 sale.OrderQty,
+                                 sale.UnitPrice,
+                                 sale.LineTotal
+                             });
+
+                foreach(var item in query)
+                {
+                    count++;
+                    sb.AppendLine($"Sales Order: {item.SalesOrderID}");
+                    sb.AppendLine($"    Product ID: {item.ProductID}");
+                    sb.AppendLine($"    Product Name: {item.Name}");
+                    sb.AppendLine($"    Size: {item.Size}");
+                    sb.AppendLine($"    Order Qty: {item.OrderQty}");
+                    sb.AppendLine($"    Total: {item.LineTotal}");
+                }
+            }
+            else
+            {
+                // Method Syntax
+                var query = Products.Join(Sales, prod => prod.ProductID,
+                    sale => sale.ProductID,
+                    (prod, sale) => new
+                    {
+                        prod.ProductID,
+                        prod.Name,
+                        prod.Color,
+                        prod.StandardCost,
+                        prod.ListPrice,
+                        prod.Size,
+                        sale.SalesOrderID,
+                        sale.OrderQty,
+                        sale.UnitPrice,
+                        sale.LineTotal
+                    });
+                
+                foreach (var item in query)
+                {
+                    count++;
+                    sb.AppendLine($"Sales Order: {item.SalesOrderID}");
+                    sb.AppendLine($"    Product ID: {item.ProductID}");
+                    sb.AppendLine($"    Product Name: {item.Name}");
+                    sb.AppendLine($"    Size: {item.Size}");
+                    sb.AppendLine($"    Order Qty: {item.OrderQty}");
+                    sb.AppendLine($"    Total: {item.LineTotal}");
+                }
+            }
+
+            ResultText = sb.ToString() + Environment.NewLine + "Total Sales: " + count.ToString();
+
+            // Clear products
+            Products.Clear();
         }
         #endregion
     }
