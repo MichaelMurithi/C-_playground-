@@ -922,5 +922,27 @@ namespace LINQSamples
             Products.Clear();
         }
         #endregion
+
+        public void Count()
+        {
+            int value;
+
+            if (UseQuerySyntax)
+            {
+                //Query syntax
+                value = (from prod in Products
+                         select prod).Count(prod => prod.Color == "Black");
+            }
+            else
+            {
+                //Method Syntax
+                value = Products.Count(prod => prod.Color == "Black");
+            }
+
+            ResultText = $"Total products = {value}";
+
+            // Clear Products
+            Products.Clear();
+        }
     }
 }
