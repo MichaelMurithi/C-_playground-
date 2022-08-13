@@ -1045,5 +1045,29 @@ namespace LINQSamples
             Products.Clear();
         }
         #endregion
+
+        #region
+        public void AgregateCustom()
+        {
+            decimal value;
+
+            if (UseQuerySyntax)
+            {
+                //Query syntax
+                value = (from sale in Sales
+                         select sale).Aggregate(0M, (sum, sale) => sum += sale.OrderQty * sale.UnitPrice);
+            }
+            else
+            {
+                //Method Syntax
+                value = Sales.Aggregate(0M, (sum, sale) => sum += sale.OrderQty * sale.UnitPrice);
+            }
+
+            ResultText = $"Total of all list prices is = {value:c}";
+
+            // Clear Products
+            Products.Clear();
+        }
+        #endregion
     }
 }
