@@ -14,7 +14,7 @@ namespace LINQSamples
       };
 
       // Call a sample method
-      vm.Count();
+      vm.Sum();
 
       // Display Product Collection
       foreach (var item in vm.Products) {

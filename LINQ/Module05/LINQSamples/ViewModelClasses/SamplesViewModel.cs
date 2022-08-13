@@ -923,6 +923,10 @@ namespace LINQSamples
         }
         #endregion
 
+        #region Count
+        /// <summary>
+        /// Using Count with a filter callback
+        /// </summary>
         public void Count()
         {
             int value;
@@ -944,5 +948,102 @@ namespace LINQSamples
             // Clear Products
             Products.Clear();
         }
+        #endregion
+
+        #region
+        public void Minimum()
+        {
+            decimal value;
+
+            if (UseQuerySyntax)
+            {
+                //Query syntax
+                value = (from prod in Products
+                         select prod.ListPrice).Min();
+            }
+            else
+            {
+                //Method Syntax
+                value = Products.Min(prod => prod.ListPrice);
+            }
+
+            ResultText = $"The minimum product price is = ${value}";
+
+            // Clear Products
+            Products.Clear();
+        }
+        #endregion
+
+        #region
+        public void Maximum()
+        {
+            decimal value;
+
+            if (UseQuerySyntax)
+            {
+                //Query syntax
+                value = (from prod in Products
+                         select prod.ListPrice).Max();
+            }
+            else
+            {
+                //Method Syntax
+                value = Products.Max(prod => prod.ListPrice);
+            }
+
+            ResultText = $"The maximum product price is = ${value}";
+
+            // Clear Products
+            Products.Clear();
+        }
+        #endregion
+
+        #region
+        public void Average()
+        {
+            decimal value;
+
+            if (UseQuerySyntax)
+            {
+                //Query syntax
+                value = (from prod in Products
+                         select prod.ListPrice).Average();
+            }
+            else
+            {
+                //Method Syntax
+                value = Products.Average(prod => prod.ListPrice);
+            }
+
+            ResultText = $"The average product price is = ${value}";
+
+            // Clear Products
+            Products.Clear();
+        }
+        #endregion
+
+        #region
+        public void Sum()
+        {
+            decimal value;
+
+            if (UseQuerySyntax)
+            {
+                //Query syntax
+                value = (from prod in Products
+                         select prod.ListPrice).Sum();
+            }
+            else
+            {
+                //Method Syntax
+                value = Products.Sum(prod => prod.ListPrice);
+            }
+
+            ResultText = $"The sum of product prices is = ${value}";
+
+            // Clear Products
+            Products.Clear();
+        }
+        #endregion
     }
 }
