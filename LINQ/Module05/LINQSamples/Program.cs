@@ -10,11 +10,11 @@ namespace LINQSamples
       SamplesViewModel vm = new SamplesViewModel
       {
         // Use Query or Method Syntax?
-        UseQuerySyntax = true
+        UseQuerySyntax = false
       };
 
       // Call a sample method
-      vm.GroupJoin();
+      vm.LeftOuterJoin();
 
       // Display Product Collection
       foreach (var item in vm.Products) {

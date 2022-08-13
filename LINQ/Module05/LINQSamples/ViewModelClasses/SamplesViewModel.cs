@@ -722,5 +722,89 @@ namespace LINQSamples
             Products.Clear();
         }
         #endregion
+
+        #region Left Outer Join
+        /// <summary>
+        /// Inner join using 'into' and a second 'from' statement
+        /// A null object may be returned for 'right' collection
+        /// Use DefaultIfEmpty() method for 'right' collection
+        /// Method syntax uses SelectMany(), Where() and DefaultIfEmpty()
+        /// </summary>
+        public void LeftOuterJoin()
+        {
+            StringBuilder sb = new(2048);
+            int count = 0;
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax is simply a 'join...into'
+                var query = (from prod in Products
+                           join sale in Sales
+                           on prod.ProductID equals sale.ProductID
+                           into sales
+                           from sale in sales.DefaultIfEmpty()
+                           select new
+                           {
+                               prod.ProductID,
+                               prod.Name,
+                               prod.Color,
+                               prod.StandardCost,
+                               prod.ListPrice,
+                               prod.Size,
+                               sale.SalesOrderID,
+                               sale.OrderQty,
+                               sale.UnitPrice,
+                               sale.LineTotal
+                           }).OrderBy(ps => ps.Name);
+
+                foreach(var item in query)
+                {
+                    count++;
+                    sb.AppendLine($"Product Name: {item.Name} ({item.ProductID})");
+                    sb.AppendLine($"    Order ID: ({item.SalesOrderID})");
+                    sb.AppendLine($"    Size: {item.Size}");
+                    sb.AppendLine($"    Order Qty: {item.OrderQty}");
+                    sb.AppendLine($"    Total: {item.LineTotal:c}");
+
+                }
+            }
+            else
+            {
+                // Method Syntax
+                var query = Products.SelectMany(
+                    sale => 
+                    Sales.Where(s => sale.ProductID == s.ProductID).DefaultIfEmpty(),
+                    (prod, sale) => new
+                    {
+                        prod.ProductID,
+                        prod.Name,
+                        prod.Color,
+                        prod.StandardCost,
+                        prod.ListPrice,
+                        prod.Size,
+                        sale.SalesOrderID,
+                        sale.OrderQty,
+                        sale.UnitPrice,
+                        sale.LineTotal
+                    }).OrderBy(ps => ps.Name);
+
+                foreach (var item in query)
+                {
+                    count++;
+                    sb.AppendLine($"Product Name: {item.Name} ({item.ProductID})");
+                    sb.AppendLine($"    Order ID: ({item.SalesOrderID})");
+                    sb.AppendLine($"    Size: {item.Size}");
+                    sb.AppendLine($"    Order Qty: {item.OrderQty}");
+                    sb.AppendLine($"    Total: {item.LineTotal:c}");
+
+                }
+            }
+
+            ResultText = sb.ToString();
+
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
     }
 }
