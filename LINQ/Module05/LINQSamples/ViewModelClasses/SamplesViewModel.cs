@@ -180,7 +180,7 @@ namespace LINQSamples
             else
             {
                 // Method Syntax
-                Products= Products.OrderBy(prod => prod.Name).SkipWhile(prod => prod.Name.StartsWith("L")).ToList();
+                Products = Products.OrderBy(prod => prod.Name).SkipWhile(prod => prod.Name.StartsWith("L")).ToList();
 
             }
 
@@ -243,7 +243,7 @@ namespace LINQSamples
             }
 
             ResultText = $"Do all Name properties contain a '{searchTerm}'? {results}";
-           
+
             // Clear products
             Products.Clear();
         }
@@ -365,7 +365,8 @@ namespace LINQSamples
             if (results)
             {
                 Console.WriteLine("The provided lists of numbers are equal");
-            }else
+            }
+            else
             {
                 Console.WriteLine("The provided lists of numbers are not equal");
             }
@@ -427,7 +428,7 @@ namespace LINQSamples
         {
             List<int> exceptions;
 
-            List<int> list1 = new List<int> { 1, 2, 3, 4, 5};
+            List<int> list1 = new List<int> { 1, 2, 3, 4, 5 };
             List<int> list2 = new List<int> { 3, 4, 5 };
 
             if (UseQuerySyntax)
@@ -606,7 +607,7 @@ namespace LINQSamples
                                  sale.LineTotal
                              });
 
-                foreach(var item in query)
+                foreach (var item in query)
                 {
                     count++;
                     sb.AppendLine($"Sales Order: {item.SalesOrderID}");
@@ -635,7 +636,7 @@ namespace LINQSamples
                         sale.UnitPrice,
                         sale.LineTotal
                     });
-                
+
                 foreach (var item in query)
                 {
                     count++;
@@ -672,14 +673,14 @@ namespace LINQSamples
             {
                 // Query Syntax is simply a 'join...into'
                 grouped = (from prod in Products
-                             join sale in Sales
-                             on prod.ProductID equals sale.ProductID
-                             into sales
-                             select new ProductSales
-                             {
-                                 Product = prod,
-                                 Sales = sales
-                             });
+                           join sale in Sales
+                           on prod.ProductID equals sale.ProductID
+                           into sales
+                           select new ProductSales
+                           {
+                               Product = prod,
+                               Sales = sales
+                           });
             }
             else
             {
@@ -694,14 +695,14 @@ namespace LINQSamples
                     });
             }
             //  Loop through each product
-            foreach(var productSales in grouped)
+            foreach (var productSales in grouped)
             {
                 sb.AppendLine($"Product: {productSales.Product}");
 
-                if(productSales.Sales.Count() > 0)
+                if (productSales.Sales.Count() > 0)
                 {
                     sb.AppendLine($"    ** Sales **");
-                    foreach(var sale in productSales.Sales)
+                    foreach (var sale in productSales.Sales)
                     {
                         sb.Append($"        SalesOrderID: {sale.SalesOrderID}");
                         sb.Append($"        Qty: {sale.OrderQty}");
@@ -739,25 +740,25 @@ namespace LINQSamples
             {
                 // Query Syntax is simply a 'join...into'
                 var query = (from prod in Products
-                           join sale in Sales
-                           on prod.ProductID equals sale.ProductID
-                           into sales
-                           from sale in sales.DefaultIfEmpty()
-                           select new
-                           {
-                               prod.ProductID,
-                               prod.Name,
-                               prod.Color,
-                               prod.StandardCost,
-                               prod.ListPrice,
-                               prod.Size,
-                               sale.SalesOrderID,
-                               sale.OrderQty,
-                               sale.UnitPrice,
-                               sale.LineTotal
-                           }).OrderBy(ps => ps.Name);
+                             join sale in Sales
+                             on prod.ProductID equals sale.ProductID
+                             into sales
+                             from sale in sales.DefaultIfEmpty()
+                             select new
+                             {
+                                 prod.ProductID,
+                                 prod.Name,
+                                 prod.Color,
+                                 prod.StandardCost,
+                                 prod.ListPrice,
+                                 prod.Size,
+                                 sale.SalesOrderID,
+                                 sale.OrderQty,
+                                 sale.UnitPrice,
+                                 sale.LineTotal
+                             }).OrderBy(ps => ps.Name);
 
-                foreach(var item in query)
+                foreach (var item in query)
                 {
                     count++;
                     sb.AppendLine($"Product Name: {item.Name} ({item.ProductID})");
@@ -772,7 +773,7 @@ namespace LINQSamples
             {
                 // Method Syntax
                 var query = Products.SelectMany(
-                    sale => 
+                    sale =>
                     Sales.Where(s => sale.ProductID == s.ProductID).DefaultIfEmpty(),
                     (prod, sale) => new
                     {
@@ -836,11 +837,81 @@ namespace LINQSamples
                 // whatever data we are grouping upon
                 sb.AppendLine($"Size: {group.Key} Count: {group.Count()}");
 
-                foreach(var prod in group)
+                foreach (var prod in group)
                 {
                     sb.Append($"    ProductID: {prod.ProductID}");
                     sb.Append($"    Name: {prod.Name}");
                     sb.AppendLine($"    Color: {prod.Color}");
+                }
+                sb.AppendLine("");
+            }
+
+            ResultText = sb.ToString();
+
+            // Clear products
+            Products.Clear();
+        }
+        #endregion
+
+        #region GroupedSubquery
+        /// <summary>
+        /// Similar to creating a one-to-many relationship
+        /// </summary>
+        public void GroupedSubquery()
+        {
+            StringBuilder sb = new(2048);
+            IEnumerable<SaleProducts> salesGroup;
+
+            if (UseQuerySyntax)
+            {
+                // Query Syntax
+                salesGroup = (from sale in Sales
+                              group sale by sale.SalesOrderID
+                              into sales
+                              select new SaleProducts
+                              {
+                                  SalesOrderId = sales.Key,
+                                  Products = (from prod in Products
+                                              join sale in Sales
+                                              on prod.ProductID equals sale.ProductID
+                                              where sale.SalesOrderID == sales.Key
+                                              select prod).ToList()
+                              });
+            }
+            else
+            {
+                salesGroup = Sales.GroupBy(sale => sale.SalesOrderID)
+                    .Select(sales => new SaleProducts
+                    {
+                        SalesOrderId = sales.Key,
+                        Products = Products.Join(
+                            sales,
+                            prod => prod.ProductID,
+                            sale => sale.ProductID,
+                            (prod, sale) => prod
+                            ).ToList()
+                    }) ;
+            }
+            //  Loop through each product
+            foreach (var sale in salesGroup)
+            {
+                sb.AppendLine($"Sales ID: {sale.SalesOrderId}");
+
+                if (sale.Products.Count > 0)
+                {
+                    sb.AppendLine($"    ** Sales **");
+                    foreach (var prod in sale.Products)
+                    {
+                        sb.Append($"        ProductID: {prod.ProductID}");
+                        sb.Append($"        Qty: {prod.Name}");
+                        sb.Append($"        Total: {prod.Color}");
+
+                    }
+                    sb.AppendLine("");
+                }
+                else
+                {
+                    sb.AppendLine("     ** No Product found for this sale **");
                 }
                 sb.AppendLine("");
             }
