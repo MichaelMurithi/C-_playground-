@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameConsole
 {
@@ -20,7 +16,7 @@ namespace GameConsole
                 Name = "Amrit"
             };
 
-            PlayerCharacter gentry = new PlayerCharacter(null)
+            PlayerCharacter gentry = new PlayerCharacter(new NullDefence())
             {
                 Name = "Gentry"
             };
@@ -28,7 +24,6 @@ namespace GameConsole
             sarah.Hit(10);
             amrit.Hit(10);
             gentry.Hit(10);
-
 
             Console.ReadLine();
         }
