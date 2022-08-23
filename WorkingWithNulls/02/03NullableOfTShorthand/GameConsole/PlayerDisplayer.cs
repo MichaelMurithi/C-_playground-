@@ -1,33 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameConsole
 {
+    /// <summary>
+    /// More on Nullable<T>
+    /// * .HasValue - false if null, otherwise true
+    /// * .Value - gets underlying value
+    /// * .GetValueOrDefault() - underlying value or default
+    /// </summary>
     static class PlayerDisplayer
     {
         public static void Write(PlayerCharacter player)
         {
             Console.WriteLine(player.Name);
 
-            if (player.DaysSinceLastLogin is null)
-            {
-                Console.WriteLine("No value for DaysSinceLastLogin");
-            }
-            else
+            if (player.DaysSinceLastLogin.HasValue)
             {
                 Console.WriteLine(player.DaysSinceLastLogin);
             }
-
-            if (player.DateOfBirth is null)
+            else
             {
-                Console.WriteLine("No date of birth specified");
+                Console.WriteLine("No value for DaysSinceLastLogin");
+            }
+
+            if (player.DateOfBirth.HasValue)
+            {
+                Console.WriteLine(player.DateOfBirth);
             }
             else
             {
-                Console.WriteLine(player.DateOfBirth);
+                Console.WriteLine("No date of birth specified");
             }
         }
     }

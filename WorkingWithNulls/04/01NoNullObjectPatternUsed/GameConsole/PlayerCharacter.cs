@@ -18,10 +18,10 @@ namespace GameConsole
         {
             int damageReduction = 0;
 
-            //if (_specialDefence != null)
-            //{ 
-            damageReduction = _specialDefence.CalculateDamageReduction();
-            //}
+            if (_specialDefence != null)
+            {
+                damageReduction = _specialDefence.CalculateDamageReduction();
+            }
 
             int totalDamageTaken = Math.Abs(damage - damageReduction);
 
