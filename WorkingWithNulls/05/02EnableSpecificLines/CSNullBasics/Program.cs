@@ -6,11 +6,17 @@ namespace CSNullBasics
     {
         static void Main()
         {
-            #nullable disable
-            string message = null;
-            Console.WriteLine(message);
-            #nullable enable
-            Console.WriteLine("Press enter to end.");
+            Message message = new()
+            {
+                Text = "Hello world",
+                From =  null
+            };
+
+            Console.WriteLine($"From: {message.From ?? "no from"}");
+            Console.WriteLine($"\tText: {message.Text}");
+            Console.WriteLine($"Sender: {message.ToUpperFrom()}");
+
+            Console.WriteLine("\nPress enter to end.");
             Console.ReadLine();
         }
     }
