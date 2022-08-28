@@ -1,17 +1,15 @@
 ﻿using System;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyClasses;
 
 namespace MyClassesTest
 {
     [TestClass]
-    public class FileProcessTest
+    public class FileProcessTest : TestBase
     {
+     
         private const string BAD_FILE_NAME = @"C:\Windows\DontExist.exe";
-
-        #nullable disable
-        public TestContext TestContext { get; set; }
-        #nullable enable
 
         [TestMethod]
         public void FileNameDoesExist()
@@ -19,9 +17,23 @@ namespace MyClassesTest
             FileProcess fp = new();
             bool doesFileExist;
 
-            TestContext.WriteLine(@"Checking if C:\Windows\Regedit.exe exists");
-            doesFileExist = fp.FileExists(@"C:\Windows\Regedit.exe");
-                
+            SetGoodFileName();
+            if (!string.IsNullOrEmpty(_GoodFileName))
+            {
+                //Create the 'Good' file
+                File.AppendAllText(_GoodFileName, "Some Text");
+            }
+
+            TestContext.WriteLine($@"Checking if {_GoodFileName} exists");
+
+            doesFileExist = fp.FileExists(_GoodFileName);
+
+            //Delete file
+            if (File.Exists(_GoodFileName))
+            {
+                File.Delete(_GoodFileName);
+            }
+            
             Assert.IsTrue(doesFileExist);
         }
 
